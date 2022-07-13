@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,9 +17,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btClick = findViewById(R.id.btSend);
+        Button btSend = findViewById(R.id.btSend);
         HelloListener listener = new HelloListener();   //リスナのインスタンス生成
-        btClick.setOnClickListener(listener);           //ボタンにリスナを組み込む
+        btSend.setOnClickListener(listener);           //ボタンにリスナを組み込む
+
+        Button btConfirm = findViewById(R.id.btConfirm);
+        btConfirm.setOnClickListener(listener);
 
         Button btClear = findViewById(R.id.btClear);
         btClear.setOnClickListener(listener);
@@ -29,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         //イベントハンドラ <= イベント発生時の処理
         @Override
         public void onClick(View view) {
+            //トーストメッセージ用文字列変数を用意
+            String msg = "";
             //名前入力欄であるEditTextオブジェクトを取得
             EditText input1 = findViewById(R.id.etName);
             EditText input2 = findViewById(R.id.etMail);
@@ -39,17 +46,30 @@ public class MainActivity extends AppCompatActivity {
 
             //タップされた画面部品のidのR値を取得
             int id  = view.getId();
+
+            String inputStr1 = input1.getText().toString();
+            String inputStr2 = input2.getText().toString();
+            String inputStr3 = input3.getText().toString();
+            String inputStr4 = input4.getText().toString();
+
+            String toastText = "名前：" + inputStr1 + "\nメールアドレス：" + inputStr2 + "\nタイトル：" + inputStr3 + "\n質問内容：" + inputStr4;
+
             //idのR値に応じて処理を分岐
             switch (id){
+                //確認ボタンの場合・・・
+                case R.id.btConfirm:
+                    //メッセージを表示
+                    //注文確認ダイアログフラグメントオブジェクトを生成
+                    OrderConfirmDialogFragment dialogFragment = new OrderConfirmDialogFragment(toastText);
+                    //ダイアログ表示
+                    dialogFragment.show(getSupportFragmentManager(), "OrderConfirmDialogFragment");
+//                    Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_LONG).show();
+                    break;
+
                 //送信ボタンの場合・・・
                 case R.id.btSend:
-                    //入力された名前文字列を取得
-                    String inputStr1 = input1.getText().toString();
-                    String inputStr2 = input2.getText().toString();
-                    String inputStr3 = input3.getText().toString();
-                    String inputStr4 = input4.getText().toString();
                     //メッセージを表示
-                    output.setText(inputStr1 + "\n" + inputStr2 + "\n" + inputStr3 + "\n" + inputStr4);
+                    Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_LONG).show();
                     break;
 
                 //クリアボタンの場合・・・
@@ -58,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                     input2.setText("");
                     input3.setText("");
                     input4.setText("");
-                    output.setText("");
                     break;
             }
 

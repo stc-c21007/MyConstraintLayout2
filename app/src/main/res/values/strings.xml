@@ -7,5 +7,13 @@
     <string name="tv_comment">質問内容</string>
     <string name="bt_confirm">確認</string>
     <string name="bt_send">送信</string>
-    <string name="bt_clear">クリア</string>
+    <string name="bt_clear">クリア</string>１
+
+    <string name="dialog_title">送信確認</string>
+    <string name="dialog_msg">以下の通りで、よろしいでしょうか。</string>
+    <string name="dialog_btn_ok">OK</string>
+    <string name="dialog_btn_ng">キャンセル</string>
+
+    <string name="dialog_ok_toast">OK</string>
+    <string name="dialog_ng_toast">キャンセル</string>
 </resources>
